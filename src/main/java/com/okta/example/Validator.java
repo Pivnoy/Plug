@@ -6,8 +6,8 @@ public class Validator implements IValidator {
         return fileNames.length != 0;
     }
 
-    private boolean noNullMembers(String [] args) {
-        for (String s: args){
+    private boolean noNullMembers(String [] members) {
+        for (String s: members){
             if (s == null) return false;
         }
         return true;
