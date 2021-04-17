@@ -19,9 +19,6 @@ import java.io.IOException;
 @Mojo(name = "crash", defaultPhase = LifecyclePhase.INITIALIZE)
 public class CheckBuildMojo extends AbstractMojo {
 
-    /**
-     * 1) Работа с относительными путями
-     * */
     @Parameter(property = "filenames")
     private String [] filenames;
 
@@ -31,7 +28,7 @@ public class CheckBuildMojo extends AbstractMojo {
     @Inject
     FileContentsChecker fileContentsChecker;
 
-    @Autowired
+    @Inject
     Validator validator;
 
     @Override
