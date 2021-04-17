@@ -6,17 +6,22 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.io.IOException;
 
+
 @Named
 @Singleton
 @Mojo(name = "crash", defaultPhase = LifecyclePhase.INITIALIZE)
 public class CheckBuildMojo extends AbstractMojo {
 
+    /**
+     * 1) Работа с относительными путями
+     * */
     @Parameter(property = "filenames")
     private String [] filenames;
 
@@ -26,7 +31,7 @@ public class CheckBuildMojo extends AbstractMojo {
     @Inject
     FileContentsChecker fileContentsChecker;
 
-    @Inject
+    @Autowired
     Validator validator;
 
     @Override
@@ -38,7 +43,7 @@ public class CheckBuildMojo extends AbstractMojo {
             if (fileContentsChecker.startCheck(filenames, words)) {
                 throw new MojoExecutionException("Find forbidden word\nBan build process");
             } else {
-                getLog().info("You can do build");
+                getLog().info("Nothing forbidden, Build allowed");
             }
         } catch (IOException e) {
             throw new MojoExecutionException("Error with file path");
